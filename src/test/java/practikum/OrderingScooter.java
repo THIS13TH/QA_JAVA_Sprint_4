@@ -11,7 +11,8 @@ import static org.junit.Assert.assertTrue;
 @RunWith(DataProviderRunner.class)
 public class OrderingScooter extends BaseUITest {
     MainPage mainPage = new MainPage(webDriver);
-
+    OrderPage orderPage = new OrderPage(webDriver);
+    MainPageLocatorsAndMethods mainPageLocatorsAndMethods = new MainPageLocatorsAndMethods(webDriver,0);
 
     @DataProvider
     public static Object[][] getCredentials() {
@@ -27,23 +28,21 @@ public class OrderingScooter extends BaseUITest {
         public void checkRentOneOrder(String name, String lastname, String adress, String metroaStation, String phone, String duration, String orderDuration, String comment, boolean result){
 
             mainPage.open();
-            mainPage.makeOrderOne();
-            OrderStepOne orderStepOne = new OrderStepOne(webDriver);
-            orderStepOne.inputCustomerName(name);
-            orderStepOne.inputCustomerLastName(lastname);
-            orderStepOne.inputCustomerAdress(adress);
-            orderStepOne.selectCustomerMetroStation(metroaStation);
-            orderStepOne.inputCustomerPhone(phone);
-            orderStepOne.clickNextButton();
+            mainPageLocatorsAndMethods.makeOrderOne();
+            orderPage.inputCustomerName(name);
+            orderPage.inputCustomerLastName(lastname);
+            orderPage.inputCustomerAdress(adress);
+            orderPage.selectCustomerMetroStation(metroaStation);
+            orderPage.inputCustomerPhone(phone);
+            orderPage.clickNextButton();
 
-            OrderStepTwo orderStepTwo = new OrderStepTwo(webDriver);
-            orderStepTwo.inputDateOrder(duration);
-            orderStepTwo.inputOrderDuration(orderDuration);
-            orderStepTwo.inputColorOrederGrey();
-            orderStepTwo.inputComment(comment);
-            orderStepTwo.clickOrderButton();
-            orderStepTwo.clickConfirmOrder();
-            assertTrue(orderStepTwo.OrderConfirm().contains("Заказ оформлен"));
+            orderPage.inputDateOrder(duration);
+            orderPage.inputOrderDuration(orderDuration);
+            orderPage.inputColorOrederGrey();
+            orderPage.inputComment(comment);
+            orderPage.clickOrderButton();
+            orderPage.clickConfirmOrder();
+            assertTrue(orderPage.OrderConfirm().contains("Заказ оформлен"));
         }
 
 
@@ -51,23 +50,21 @@ public class OrderingScooter extends BaseUITest {
         @UseDataProvider("getCredentials")
         public void checkRentTwoOrder(String name, String lastname, String adress, String metroaStation, String phone, String duration, String orderDuration, String comment, boolean result) {
             mainPage.open();
-            mainPage.makeOrderTwo();
-            OrderStepOne orderStepOne = new OrderStepOne(webDriver);
-            orderStepOne.inputCustomerName(name);
-            orderStepOne.inputCustomerLastName(lastname);
-            orderStepOne.inputCustomerAdress(adress);
-            orderStepOne.selectCustomerMetroStation(metroaStation);
-            orderStepOne.inputCustomerPhone(phone);
-            orderStepOne.clickNextButton();
-
-            OrderStepTwo orderStepTwo = new OrderStepTwo(webDriver);
-            orderStepTwo.inputDateOrder(duration);
-            orderStepTwo.inputOrderDuration(orderDuration);
-            orderStepTwo.inputColorOrederBlack();
-            orderStepTwo.inputComment(comment);
-            orderStepTwo.clickOrderButton();
-            orderStepTwo.clickConfirmOrder();
-            assertTrue(orderStepTwo.OrderConfirm().contains("Заказ оформлен"));
+            mainPageLocatorsAndMethods.makeOrderTwo();
+            orderPage.inputCustomerName(name);
+            orderPage.inputCustomerLastName(lastname);
+            orderPage.inputCustomerAdress(adress);
+            orderPage.selectCustomerMetroStation(metroaStation);
+            orderPage.inputCustomerPhone(phone);
+            orderPage.clickNextButton();
+            
+            orderPage.inputDateOrder(duration);
+            orderPage.inputOrderDuration(orderDuration);
+            orderPage.inputColorOrederBlack();
+            orderPage.inputComment(comment);
+            orderPage.clickOrderButton();
+            orderPage.clickConfirmOrder();
+            assertTrue(orderPage.OrderConfirm().contains("Заказ оформлен"));
         }
     }
 

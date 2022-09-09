@@ -1,6 +1,7 @@
 package practikum;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 
@@ -10,51 +11,121 @@ public  class OrderPage extends BasePage {
     }
 
     // Локатор для Поля "Имя"
-    protected static final By firstNameCustomer = By.xpath("//input[@placeholder ='* Имя']");
+    private By firstNameCustomer = By.xpath("//input[@placeholder ='* Имя']");
 
     // Локатор для Поля "Фамилия"
-    protected static final By lastNameCustomer = By.xpath("//input[@placeholder ='* Фамилия']");
+    private By lastNameCustomer = By.xpath("//input[@placeholder ='* Фамилия']");
 
     // Локатор для Поле "Адрес"
-    protected static final By adressCustomer = By.xpath("//input[@placeholder ='* Адрес: куда привезти заказ']");
+    private By adressCustomer = By.xpath("//input[@placeholder ='* Адрес: куда привезти заказ']");
 
     // Локатор для Поля "Телефон"
-    protected static final By phoneCustomer = By.xpath("//input[@placeholder ='* Телефон: на него позвонит курьер']");
+    private By phoneCustomer = By.xpath("//input[@placeholder ='* Телефон: на него позвонит курьер']");
 
     // Локатор для Кнопка далее
-    protected static final By nextButton = By.xpath("//button[text()= 'Далее']");
+    private By nextButton = By.xpath("//button[text()= 'Далее']");
 
 
 
     //    Локатор поля даты
-    protected static final By dateOrder = By.xpath("//*[contains(@placeholder, '* Когда привезти самокат')]");
+    private By dateOrder = By.xpath("//*[contains(@placeholder, '* Когда привезти самокат')]");
 
     //   Локатор предыдущего месяца
-    protected static final By previosMonth = By.xpath("//div[contains(@class, 'react-datepicker')]//button[contains(text(), 'Previous Month')]");
+    private By previosMonth = By.xpath("//div[contains(@class, 'react-datepicker')]//button[contains(text(), 'Previous Month')]");
 
     //   Локатор следующего месяца
-    protected static final By nextMonth = By.xpath("//div[contains(@class, 'react-datepicker')]//button[contains(text(), 'Next Month')]");
+    private By nextMonth = By.xpath("//div[contains(@class, 'react-datepicker')]//button[contains(text(), 'Next Month')]");
 
     //    Локатор срока аренды
-    protected static final By periodDuration = By.xpath("//*[@class='Dropdown-placeholder']");
+    private By periodDuration = By.xpath("//*[@class='Dropdown-placeholder']");
 
     //Локатор выбора черного цвета
-    protected static final By blackColor = By.id("black");
+    private By blackColor = By.id("black");
 
     //Локатор выбора Серого цвета
-    protected static final By greyColor = By.id("grey");
+    private By greyColor = By.id("grey");
 
     //Локатор для комментарий для курьера
-    protected static final By commentOrder = By.xpath("//input[@placeholder ='Комментарий для курьера']");
+    private By commentOrder = By.xpath("//input[@placeholder ='Комментарий для курьера']");
 
     //Локатор кнопки "Заказть"
-    protected static final By orderButton = By.xpath("//div[contains(@class, 'Order_Buttons')]//button[contains(text(), 'Заказать')]");
+    private By orderButton = By.xpath("//div[contains(@class, 'Order_Buttons')]//button[contains(text(), 'Заказать')]");
 
     //Локатор кнопки "Да"
-    protected static final By confirmButton = By.xpath("//div[contains(@class, 'Order_Buttons')]//button[contains(text(),'Да')]");
+    private By confirmButton = By.xpath("//div[contains(@class, 'Order_Buttons')]//button[contains(text(),'Да')]");
 
     //Локатор подтвержденного заказа
-    protected static final By listOrder = By.xpath("//div[contains(@class, 'Order_ModalHeader')]");
+    private By listOrder = By.xpath("//div[contains(@class, 'Order_ModalHeader')]");
 
 
+    public void inputCustomerName(String name){
+        webDriver.findElement(firstNameCustomer).sendKeys(name);
+    }
+
+    public void inputCustomerLastName(String lastName){
+        webDriver.findElement(lastNameCustomer).sendKeys(lastName);
+    }
+
+    public void inputCustomerAdress(String adress){
+        webDriver.findElement(adressCustomer).sendKeys(adress);
+    }
+
+    public void selectCustomerMetroStation(String metroStation){
+        // Локатор для Поля "Станция метро"
+        By metroStationCustomer = By.xpath("//input[@placeholder ='* Станция метро']");
+        By station = By.xpath("//div[@class='select-search__select']//*[text()='"+metroStation+"']");
+        webDriver.findElement(metroStationCustomer).click();
+        webDriver.findElement(station).click();
+    }
+
+    public void inputCustomerPhone(String phone){
+        webDriver.findElement(phoneCustomer).sendKeys(phone);
+    }
+
+    public void clickNextButton(){
+        webDriver.findElement(nextButton).click();
+    }
+
+    public void inputDateOrder(String dateTime){
+        webDriver.findElement(dateOrder).click();
+        webDriver.findElement(dateOrder).sendKeys(dateTime);
+        webDriver.findElement(dateOrder).sendKeys(Keys.ENTER);
+    }
+
+    public void choosePreviosMonth(){
+        webDriver.findElement(previosMonth).click();
+    }
+
+    public void chooseNextMonth(){
+        webDriver.findElement(nextMonth).click();
+    }
+
+    public void inputOrderDuration(String Duration){
+        webDriver.findElement(periodDuration).click();
+        webDriver.findElement(By.xpath("//*[text()='"+Duration+"']")).click();
+    }
+
+    public void inputColorOrederBlack() {
+        webDriver.findElement(blackColor).click();
+    }
+
+    public void inputColorOrederGrey() {
+        webDriver.findElement(greyColor).click();
+    }
+
+    public void inputComment(String comment){
+        webDriver.findElement(commentOrder).sendKeys(comment);
+    }
+
+    public void clickOrderButton(){
+        webDriver.findElement(orderButton).click();
+    }
+
+    public void clickConfirmOrder(){
+        webDriver.findElement(confirmButton).click();
+    }
+
+    public String OrderConfirm(){
+        return webDriver.findElement(listOrder).getText();
+    }
 }
